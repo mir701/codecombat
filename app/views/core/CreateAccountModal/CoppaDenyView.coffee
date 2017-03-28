@@ -18,7 +18,12 @@ module.exports = class CoppaDenyView extends CocoView
     @listenTo @state, 'all', _.debounce(@render)
     
   onChangeParentEmail: (e) ->
-    @state.set { parentEmail: $(e.currentTarget).val() }, { silent: true }
+    parentEmail = $(e.currentTarget).val()
+    @state.set { parentEmail }, { silent: true }
+    if parentEmail is 'team@codecombat.com'
+      @state.set { dontUseOurEmailSilly: true }
+    else
+      @state.set { dontUseOurEmailSilly: false, silent: true }
 
   onClickSendParentEmailButton: (e) ->
     e.preventDefault()
